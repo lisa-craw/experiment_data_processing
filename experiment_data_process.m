@@ -1,6 +1,8 @@
-% script to process all experimental data. This uses several functions defined in the same directory:
+% script to process all experimental data, by smoothing with cubic spline, correcting for load top-ups and equipment errors, and calculating strain rates. This uses several functions defined in the same directory:
 % import_data.m
 % preprocess.m
+% all functions in the directory /correction_scripts (one for each experiment)
+% smooth_and_calc.m
 
 %number of experiments which are ready to be processed (some might not have any data yet)
 num_experiments = 41;
@@ -82,11 +84,17 @@ LC039_corrections('~/experimental_data/LC039/LC039_preprocessed.csv', '~/experim
 %}}}
 
 %% smooth data and save {{{
-% load each corrected dataset, smooth with a cubic spline and calculate strain rates using supplied parameters
+% load each corrected dataset, smooth with a cubic spline and calculate strain rates using supplied parameters. Save as [exp_number]_smoothed.csv.
 N1 = 2000;
 N2 = 2000;
 p_v = 1e-2;
 
-smooth_and_calc('~/experimental_data/LC001/LC001_corrected.csv', '~/experimental_data/LC001/LC001_smoothed.csv', experiment_list.z_0(1), N1, N2, p_v)
+for i=1:num_experiments
+	exp_num = char(experiment_list.experiment_number(i));
+	if isfile(strcat('~/experimental_data/', exp_num, '/', exp_num, '_corrected.csv'))
+		smooth_and_calc(strcat('~/experimental_data/', exp_num, '/', exp_num, '_corrected.csv'), strcat('~/experimental_data/', exp_num, '/', exp_num, '_smoothed.csv'), experiment_list.z_0(i), N1, N2, p_v)
+	else
+	end
+end
 
 %}}}
