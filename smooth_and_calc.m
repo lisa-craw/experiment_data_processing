@@ -123,7 +123,7 @@ data.smoothed_octahedral_strain_rate = data.smoothed_axial_strain_rate./sqrt(2);
 table.smoothed_mean_time = data.smoothed_mean_time;
 table.smoothed_axial_strain = data.smoothed_mean_axial_strain;
 table.smoothed_axial_strain_rate = data.smoothed_axial_strain_rate;
-table.smoothed_smoothed_octahedral_strain = data.smoothed_octahedral_strain;
+table.smoothed_octahedral_strain = data.smoothed_octahedral_strain;
 table.smoothed_octahedral_strain_rate = data.smoothed_octahedral_strain_rate;
 
 writetable(struct2table(table), output_file)
