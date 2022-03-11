@@ -1,8 +1,11 @@
 % function which plots strain rates throughout an experiment, and takes user input to help calculate secondary and tertiary strain rates.
 %input: experiment number as a string
 
-function [secondary_rate, secondary_strain, tertiary_rate, tertiary_strain] = get_strain_rate(experiment_number)
+function [secondary_rate, secondary_strain, tertiary_rate_1, tertiary_strain_1, tertiary_rate_2, tertiary_strain_2] = get_strain_rate(experiment_number)
 	filepath = strcat('~/experimental_data/', experiment_number, '/', experiment_number, '_smoothed.csv');
+	index = str2double(extractAfter(experiment_number, 'LC0'));
+	experiment_list = readtable('~/experimental_data/experiment_parameters.csv');
+	temp = experiment_list.temperature(index);
 		table = readtable(filepath);
 		rate = table.smoothed_octahedral_strain_rate;
 		strain = table.smoothed_octahedral_strain;
@@ -22,17 +25,29 @@ function [secondary_rate, secondary_strain, tertiary_rate, tertiary_strain] = ge
 			secondary_strain = NaN;
 		end
 				
-		disp('select the start and end of the tertiary rate')
+		disp('select the start and end of the first tertiary rate')
 		%this is to exclude the "drop-off zone" at the end of some experiments
-		[tert_x, tert_y] = ginput(2);
-		tert_x = floor(tert_x);
-		tert_y = floor(tert_y);
-		clf	
-		if tert_x<=length(rate)
-			tertiary_rate = mean(rate(tert_x(1):tert_x(2)));
-			tertiary_strain = mean(strain(tert_x(1):tert_x(2)));
+		[tert_1_x, tert_1_y] = ginput(2);
+		tert_1_x = floor(tert_1_x);
+		tert_1_y = floor(tert_1_y);
+		if tert_1_x<=length(rate)
+			tertiary_rate_1 = mean(rate(tert_1_x(1):tert_1_x(2)));
+			tertiary_strain_1 = strain(tert_1_x(1));
 		else
-			tertiary_rate = NaN;
-			tertiary_strain = NaN;
+			tertiary_rate_1 = NaN;
+			tertiary_strain_1 = NaN;
 		end
+		if contains(char(temp), ',')
+			disp('select the start and end of the second tertiary rate')
+			%this is to exclude the "drop-off zone" at the end of some experiments
+			[tert_2_x, tert_2_y] = ginput(2);
+			tert_2_x = floor(tert_2_x);
+			tert_2_y = floor(tert_2_y);
+			tertiary_rate_2 = mean(rate(tert_2_x(1):tert_2_x(2)));
+			tertiary_strain_2 = strain(tert_2_x(1));
+		else
+			tertiary_rate_2 = NaN;
+			tertiary_strain_2 = NaN;
+		end
+		clf	
 end

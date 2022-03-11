@@ -15,11 +15,13 @@ for i=1:length(target_experiments)
 	experiment_number = target_experiments(i);
 	experiment_name = char(experiment_list.experiment_number(experiment_number));
 	if isfile(strcat('~/experimental_data/', experiment_name, '/', experiment_name, '_smoothed.csv'))
-		[secondary_rate, secondary_strain, tertiary_rate, tertiary_strain] = get_strain_rate(experiment_name)
+		[secondary_rate, secondary_strain, tertiary_rate_1, tertiary_strain_1, tertiary_rate_2, tertiary_strain_2] = get_strain_rate(experiment_name)
 		experiment_list.secondary_rate(i) = round(secondary_rate, 4, 'significant');
 		experiment_list.secondary_strain(i) = round(secondary_strain, 4, 'significant');
-		experiment_list.tertiary_rate(i) = round(tertiary_rate, 4, 'significant');
-		experiment_list.tertiary_strain(i) = round(tertiary_strain, 4, 'significant');
+		experiment_list.tertiary_rate_1(i) = round(tertiary_rate_1, 4, 'significant');
+		experiment_list.tertiary_strain_1(i) = round(tertiary_strain_1, 4, 'significant');
+		experiment_list.tertiary_rate_2(i) = round(tertiary_rate_2, 4, 'significant');
+		experiment_list.tertiary_strain_2(i) = round(tertiary_strain_2, 4, 'significant');
 	else
 	end
 end
