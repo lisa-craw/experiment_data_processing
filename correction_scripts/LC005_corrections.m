@@ -29,7 +29,7 @@ data.v_dis(13446:16841) = data.v_dis(13446:16841)*(+1);
 
 data.v_dis(13446:end) = data.v_dis(13446:end) + 0.5225;
 
-I = [12982 13446];% data range
+I = [12900 17446];% data range
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1); % linear fit
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); % replace data
 
@@ -289,6 +289,10 @@ data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); % replace data
 data.v_dis(323791:end) = data.v_dis(323791:end) - 0.006;
 
 I = [323442 323791];% data range
+p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1); % linear fit
+data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); % replace data
+
+I = [12800 18446];% data range
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1); % linear fit
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); % replace data
 

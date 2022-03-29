@@ -6,7 +6,7 @@ data.h_dis = tmp.v_dis;
 data.time = tmp.time;
 data.temp = tmp.temp;
 
-data.v_dis(96270:end) = data.v_dis(96270:end) + 0.8;
+data.v_dis(96270:end) = data.v_dis(96270:end) - 0.8;
 
 I = [95630 96270];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
@@ -36,6 +36,7 @@ p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
 
 data.v_dis = data.v_dis(1:216819);
+data.h_dis = data.h_dis(1:216819);
 data.time = data.time(1:216819);
 data.temp = data.temp(1:216819);
 

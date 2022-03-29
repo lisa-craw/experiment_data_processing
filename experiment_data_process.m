@@ -45,8 +45,8 @@ LC006_corrections('~/experimental_data/LC006/LC006_preprocessed.csv', '~/experim
 LC007_corrections('~/experimental_data/LC007/LC007_preprocessed.csv', '~/experimental_data/LC007/LC007_corrected.csv');
 LC008_corrections('~/experimental_data/LC008/LC008_preprocessed.csv', '~/experimental_data/LC008/LC008_corrected.csv');
 LC009_corrections('~/experimental_data/LC009/LC009_preprocessed.csv', '~/experimental_data/LC009/LC009_corrected.csv');
-%LC010_corrections('~/experimental_data/LC010/LC010_preprocessed.csv', '~/experimental_data/LC010/LC010_corrected.csv');
-%LC011_corrections('~/experimental_data/LC011/LC011_preprocessed.csv', '~/experimental_data/LC011/LC011_corrected.csv');
+LC010_corrections('~/experimental_data/LC010/LC010_preprocessed.csv', '~/experimental_data/LC010/LC010_corrected.csv');
+LC011_corrections('~/experimental_data/LC011/LC011_preprocessed.csv', '~/experimental_data/LC011/LC011_corrected.csv');
 LC012_corrections('~/experimental_data/LC012/LC012_preprocessed.csv', '~/experimental_data/LC012/LC012_corrected.csv');
 %LC013_corrections('~/experimental_data/LC013/LC013_preprocessed.csv', '~/experimental_data/LC013/LC013_corrected.csv');
 LC014_corrections('~/experimental_data/LC014/LC014_preprocessed.csv', '~/experimental_data/LC014/LC014_corrected.csv');
