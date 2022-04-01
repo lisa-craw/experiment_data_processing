@@ -44,10 +44,10 @@ I = [12565-100 12565];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
 
-%data.v_dis = data.v_dis(9:end);
-%data.h_dis = data.h_dis(9:end);
-%data.time = data.time(9:end);
-%data.temp = data.temp(9:end);
+data.v_dis = data.v_dis(9:end);
+data.h_dis = data.h_dis(9:end);
+data.time = data.time(9:end);
+data.temp = data.temp(9:end);
 
 
 

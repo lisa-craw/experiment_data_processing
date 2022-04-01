@@ -9,7 +9,7 @@ data.temp = tmp.temp;
 
 data.v_dis(12226:end) = data.v_dis(12226:end) - 0.01;
 
-I = [12080 12226];
+I = [11892 12226];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
 
@@ -25,7 +25,7 @@ I = [42490 42606];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2));
 
-data.v_dis(46851:end) = data.v_dis(46851:end) - 0.007;
+data.v_dis(46851:end) = data.v_dis(46851:end) - 0.008;
 
 I = [46720 46851];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
@@ -39,7 +39,7 @@ data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2));
 
 data.v_dis(55260:end) = data.v_dis(55260:end) - 0.015;
 
-I = [55145 55260];
+I = [55094 55260];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2));
 
@@ -49,11 +49,13 @@ I = [59361 59887];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2));
 
-data.v_dis(73857:end) = data.v_dis(73857:end) - 0.041;
+data.v_dis(73850:end) = data.v_dis(73850:end) - 0.04;
 
-I = [73567:73857];
+I = [73535 73850];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2));
+
+data.v_dis(43466) = data.v_dis(43465);
 
 data_corr = data;
 writetable(struct2table(data), output_file);
