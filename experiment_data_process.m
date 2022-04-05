@@ -5,7 +5,7 @@
 % smooth_and_calc.m
 
 %number of experiments which are ready to be processed (some might not have any data yet)
-num_experiments = 41;
+num_experiments = 45;
 
 %load table of experiment parameters
 experiment_list = readtable('~/experimental_data/experiment_parameters.csv');
@@ -24,9 +24,9 @@ end
 
 % preprocess data {{{
 % load each raw data structure and remove obvious errors due to sticky dial gauges, temperature errors etc 
-for i=1:num_experiments
-	if isnan(starting_points(i))==0 & isnan(end_points(i))==0
-	preprocess(char(experiment_numbers(i)), starting_points(i), end_points(i));
+for k=1:num_experiments
+	if isnan(starting_points(k))==0 & isnan(end_points(k))==0
+	preprocess(char(experiment_numbers(k)), starting_points(k), end_points(k));
 else
 end
 end
@@ -95,6 +95,14 @@ for i=1:num_experiments
 		smooth_and_calc(strcat('~/experimental_data/', exp_num, '/', exp_num, '_corrected.csv'), strcat('~/experimental_data/', exp_num, '/', exp_num, '_smoothed.csv'), experiment_list.z_0(i), N1, N2, p_v)
 	else
 	end
+end
+
+%}}}
+
+% extract strain rate data {{{
+% check if there is a file of strain rate data. If not, prompt user to select strain rates
+if isfile('~/experimental_data/strain_rates.csv)==0
+	strain_rates_tabulate
 end
 
 %}}}
