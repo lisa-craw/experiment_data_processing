@@ -4,6 +4,8 @@
 % all functions in the directory /correction_scripts (one for each experiment)
 % smooth_and_calc.m
 
+%and requires the files experiment_parameters.csv, and all experimental output (a series of .txt files, all stored in a directory titled with the experiment number)
+
 %number of experiments which are ready to be processed (some might not have any data yet)
 num_experiments = 45;
 
@@ -101,8 +103,29 @@ end
 
 % extract strain rate data {{{
 % check if there is a file of strain rate data. If not, prompt user to select strain rates
-if isfile('~/experimental_data/strain_rates.csv)==0
+if isfile('~/experimental_data/strain_rates.csv')==0
 	strain_rates_tabulate
 end
+%}}}
+
+% add total accumulated strain to strain_rates.csv {{{
+strain_rates = readtable('~/experimental_data/strain_rates.csv');
+experiment_numbers = strain_rates.experiment_number;
+already_exists = strcmp('max_axial_strain', strain_rates.Properties.VariableNames);
+
+if already_exists==0;
+	for i=1:length(experiment_numbers)
+	experiment_number = char(experiment_numbers(i));
+		if isfile(strcat('~/experimental_data/', experiment_number, '/', experiment_number, '_smoothed.csv'));
+			data = readtable(strcat('~/experimental_data/', experiment_number, '/', experiment_number, '_smoothed.csv'));
+			max_axial_strain = max(data.smoothed_axial_strain);
+			max_octahedral_strain = max(data.smoothed_octahedral_strain);
+			strain_rates.max_axial_strain(i) = max_axial_strain;
+			strain_rates.max_octahedral_strain(i) = max_octahedral_strain;
+		end	
+	end
+writetable(strain_rates, '~/experimental_data/strain_rates.csv');
+end
+
 
 %}}}
