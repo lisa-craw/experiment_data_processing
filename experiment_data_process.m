@@ -108,7 +108,7 @@ if isfile('~/experimental_data/strain_rates.csv')==0
 end
 %}}}
 
-% add total accumulated strain to strain_rates.csv {{{
+% add total accumulated strain and time to strain_rates.csv {{{
 strain_rates = readtable('~/experimental_data/strain_rates.csv');
 experiment_numbers = strain_rates.experiment_number;
 already_exists = strcmp('max_axial_strain', strain_rates.Properties.VariableNames);
@@ -120,8 +120,12 @@ if already_exists==0;
 			data = readtable(strcat('~/experimental_data/', experiment_number, '/', experiment_number, '_smoothed.csv'));
 			max_axial_strain = max(data.smoothed_axial_strain);
 			max_octahedral_strain = max(data.smoothed_octahedral_strain);
-			strain_rates.max_axial_strain(i) = max_axial_strain;
-			strain_rates.max_octahedral_strain(i) = max_octahedral_strain;
+			total_time_hours = max(data.smoothed_mean_time);
+			total_time_days = max(data.smoothed_mean_time)/24;
+			strain_rates.max_axial_strain(i) = round(max_axial_strain, 4, 'significant');
+			strain_rates.max_octahedral_strain(i) = round(max_octahedral_strain, 4, 'significant');
+			strain_rates.total_time_hours(i) = round(total_time_hours, 4, 'significant');
+			strain_rates.total_time_days(i) = round(total_time_days, 4, 'significant');
 		end	
 	end
 writetable(strain_rates, '~/experimental_data/strain_rates.csv');
