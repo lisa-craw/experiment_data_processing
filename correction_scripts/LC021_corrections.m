@@ -16,6 +16,8 @@ I = [181547 182298];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
 
+data.v_dis(1:95333) = data.v_dis(1:95333)*(-1);
+
 I = [95333 96064];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
