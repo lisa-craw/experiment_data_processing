@@ -24,9 +24,10 @@ meteoric_ice = rheology_list(is_meteoric, :);
 %% set colours {{{
 
 %purple for standard ice
-shade = 0.1;
-c_standard_7 = [0.4431 0.2431 0.3529];
-c_standard_2 = c_standard_7 + [shade shade shade];
+shade = 0.15;
+c_standard_5 = [0.4431 0.2431 0.3529];
+c_standard_2 = c_standard_5 + [shade shade shade];
+c_standard_7 = c_standard_5 - [shade shade shade];
 
 %blue for meteoric ice
 c_meteoric_7 = [0.2157 0.4431 0.5569];
@@ -47,7 +48,7 @@ main_line_width = 2;
 dotted_line_width = 1.5;
 dot_size = 10;
 
-f1 = figure('Position', [200 200 1200 550]);
+f1 = figure('Position', [200 200 1500 550]);
 standard_ax = subplot(1,3,1);
 hold on
 		
@@ -56,9 +57,10 @@ minus2_ind = find(str2double(standard_ice.temperature)==-2);
 first_minus2 = minus2_ind(1);
 minus7_ind = find(str2double(standard_ice.temperature)==-7);
 first_minus7 = minus7_ind(1);
-
-% QUICK CHEAT, FIX THIS LATER
-first_minus7 = 4; 
+minus5_ind = find(str2double(standard_ice.temperature)==-5);
+first_minus5 = minus5_ind(1);
+%minus10_ind = find(str2double(standard_ice.temperature)==-10);
+%first_minus10 = minus10_ind(1);
 
 for i = 1:length(standard_ice.experiment_number)
 	experiment_number = char(standard_ice.experiment_number(i));
@@ -69,9 +71,13 @@ for i = 1:length(standard_ice.experiment_number)
 			colour = c_standard_7;
 		elseif str2double(standard_ice.temperature{i}) == -2;
 			colour = c_standard_2;
-		else colour = [0.5 0.5 0.5]
+		elseif str2double(standard_ice.temperature{i}) == -5;
+			colour = c_standard_5;
+%		elseif str2double(standard_ice.temperature{i}) == -10;
+%			colour = c_standard_10;
+		else colour = [0.5 0.5 0.5];
 		end
-		if i==first_minus7 | i==first_minus2
+		if i==first_minus7 | i==first_minus2 | i==first_minus5% | i==first_minus10
 			handle_visibility = 'on';
 		else
 			handle_visibility = 'off';
@@ -85,7 +91,7 @@ for i = 1:length(standard_ice.experiment_number)
 	end
 end
 
-legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$');
+legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$');
 
 
 
