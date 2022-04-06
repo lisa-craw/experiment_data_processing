@@ -29,7 +29,7 @@ meteoric_ice = sortrows(meteoric_ice, 'temperature');
 
 %purple for standard ice
 shade = 0.15;
-c_standard_5 = [0.4431 0.2431 0.3529];
+c_standard_5 = [0.4431 0.2431 0.3529] + [shade shade shade];
 c_standard_2 = c_standard_5 + [shade shade shade];
 c_standard_7 = c_standard_5 - [shade shade shade];
 
@@ -48,12 +48,12 @@ grey = [0.4 0.4 0.4];
 %% 
 
 %% plot all three datasets {{{
-main_line_width = 2;
-dotted_line_width = 1.5;
+main_line_width = 2.5;
+dotted_line_width = 2;
 dot_size = 10;
 
-f1 = figure('Position', [200 200 1500 550]);
-axis_limits = [0 0.2 0 2.5e-7];
+f1 = figure('Position', [200 200 1700 550]);
+axis_limits = [0 0.2 0 2.1e-7];
 
 % standard ice {{{
 standard_ax = subplot(1,3,1);
@@ -91,9 +91,9 @@ for i = 1:length(standard_ice.experiment_number)
 		end
 		plot(data.smoothed_octahedral_strain, data.smoothed_octahedral_strain_rate, 'LineWidth', main_line_width, 'color', colour, 'HandleVisibility', handle_visibility);
 		%plot tertiary strain rates as dotted lines
-		yline(standard_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', grey, 'HandleVisibility', 'off');
+		yline(standard_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', colour, 'HandleVisibility', 'off');
 		%plot secondary minimum
-		plot(standard_ice.secondary_strain(i), standard_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', grey, 'HandleVisibility', 'off');
+		plot(standard_ice.secondary_strain(i), standard_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'off');
 	end
 end
 axis(axis_limits)
@@ -129,9 +129,9 @@ for i = 1:length(meteoric_ice.experiment_number)
 		end
 		plot(data.smoothed_octahedral_strain, data.smoothed_octahedral_strain_rate, 'LineWidth', main_line_width, 'color', colour, 'HandleVisibility', handle_visibility);
 		%plot tertiary strain rates as dotted lines
-		yline(meteoric_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', grey, 'HandleVisibility', 'off');
+		yline(meteoric_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', colour, 'HandleVisibility', 'off');
 		%plot secondary minimum
-		plot(meteoric_ice.secondary_strain(i), meteoric_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', grey, 'HandleVisibility', 'off');
+		plot(meteoric_ice.secondary_strain(i), meteoric_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'off');
 	end
 end
 axis(axis_limits)
@@ -169,9 +169,9 @@ for i = 1:length(marine_ice.experiment_number)
 		end
 		plot(data.smoothed_octahedral_strain, data.smoothed_octahedral_strain_rate, 'LineWidth', main_line_width, 'color', colour, 'HandleVisibility', handle_visibility);
 		%plot tertiary strain rates as dotted lines
-		yline(marine_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', grey, 'HandleVisibility', 'off');
+		yline(marine_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', colour, 'HandleVisibility', 'off');
 		%plot secondary minimum
-		plot(marine_ice.secondary_strain(i), marine_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', grey, 'HandleVisibility', 'off');
+		plot(marine_ice.secondary_strain(i), marine_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'off');
 	end
 end
 axis(axis_limits)
@@ -184,3 +184,4 @@ title('marine ice')
 
 %% }}}
 
+export_fig '~/experimental_data/figures/rheology_stress_strain_all' -png
