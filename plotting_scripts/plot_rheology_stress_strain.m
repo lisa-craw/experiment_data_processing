@@ -7,6 +7,10 @@ changing_temp = contains(strain_rates.temperature, ',');
 rheology_list = strain_rates(~changing_temp, :);
 not_tertiary = isnan(rheology_list.tertiary_rate_1);
 rheology_list = rheology_list(~not_tertiary, :);
+
+%LC034 appears to be affected by large grain size relative to sample size, giving it a stupidly high strain rate. Excluding this to make the rest of the data clearer (comment these lines to keep it in)
+%is28 = contains(rheology_list.experiment_number, '28');
+%rheology_list = rheology_list(~is28, :);
 %%}}}
 
 % separate out marine, meteoric and standard ice {{{ 
