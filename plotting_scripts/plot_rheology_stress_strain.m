@@ -12,12 +12,16 @@ rheology_list = rheology_list(~minus_10, :);
 %%}}}
 
 % separate out marine, meteoric and standard ice {{{ 
+% sort by temperature to make legend labels easier
 is_standard = strcmp(rheology_list.ice_type, 'standard');
 standard_ice = rheology_list(is_standard, :);
+standard_ice = sortrows(standard_ice, 'temperature');
 is_marine = strcmp(rheology_list.ice_type, 'marine');
 marine_ice = rheology_list(is_marine, :);
+marine_ice = sortrows(marine_ice, 'temperature');
 is_meteoric = strcmp(rheology_list.ice_type, 'meteoric');
 meteoric_ice = rheology_list(is_meteoric, :);
+meteoric_ice = sortrows(meteoric_ice, 'temperature');
 
 %}}}
 
@@ -49,6 +53,9 @@ dotted_line_width = 1.5;
 dot_size = 10;
 
 f1 = figure('Position', [200 200 1500 550]);
+axis_limits = [0 0.2 0 2.5e-7];
+
+% standard ice {{{
 standard_ax = subplot(1,3,1);
 hold on
 		
@@ -82,7 +89,6 @@ for i = 1:length(standard_ice.experiment_number)
 		else
 			handle_visibility = 'off';
 		end
-		%}}}
 		plot(data.smoothed_octahedral_strain, data.smoothed_octahedral_strain_rate, 'LineWidth', main_line_width, 'color', colour, 'HandleVisibility', handle_visibility);
 		%plot tertiary strain rates as dotted lines
 		yline(standard_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', grey, 'HandleVisibility', 'off');
@@ -90,9 +96,90 @@ for i = 1:length(standard_ice.experiment_number)
 		plot(standard_ice.secondary_strain(i), standard_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', grey, 'HandleVisibility', 'off');
 	end
 end
+axis(axis_limits)
+legend('$-2\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$')
+xlabel('octahedral shear strain')
+ylabel('octahedral shear strain rate')
+title('standard ice')
 
-legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$');
+%}}}
+% meteoric ice {{{
+meteoric_ax = subplot(1,3,2);
+hold on
+		
+% find the first instance of each temp (these need to be visible to the legend)
+minus7_ind = find(str2double(meteoric_ice.temperature)==-7);
+first_minus7 = minus7_ind(1);
 
+for i = 1:length(meteoric_ice.experiment_number)
+	experiment_number = char(meteoric_ice.experiment_number(i));
+	filepath = strcat('~/experimental_data/', experiment_number, '/', experiment_number, '_smoothed.csv');
+	if isfile(filepath)
+		data = readtable(filepath);
+		if str2double(meteoric_ice.temperature{i}) == -7;
+			colour = c_meteoric_7;
+		elseif str2double(meteoric_ice.temperature{i}) == -2;
+			colour = c_meteoric_2;
+		else colour = [0.5 0.5 0.5];
+		end
+		if i==first_minus7 
+			handle_visibility = 'on';
+		else
+			handle_visibility = 'off';
+		end
+		plot(data.smoothed_octahedral_strain, data.smoothed_octahedral_strain_rate, 'LineWidth', main_line_width, 'color', colour, 'HandleVisibility', handle_visibility);
+		%plot tertiary strain rates as dotted lines
+		yline(meteoric_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', grey, 'HandleVisibility', 'off');
+		%plot secondary minimum
+		plot(meteoric_ice.secondary_strain(i), meteoric_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', grey, 'HandleVisibility', 'off');
+	end
+end
+axis(axis_limits)
+legend('$-7\,^{\circ}\mathrm{C}$')
+xlabel('octahedral shear strain')
+ylabel('octahedral shear strain rate')
+title('meteoric ice')
+%}}}
+
+% marine ice {{{
+marine_ax = subplot(1,3,3);
+hold on
+		
+% find the first instance of each temp (these need to be visible to the legend)
+minus2_ind = find(str2double(marine_ice.temperature)==-2);
+first_minus2 = minus2_ind(1);
+minus7_ind = find(str2double(marine_ice.temperature)==-7);
+first_minus7 = minus7_ind(1);
+
+for i = 1:length(marine_ice.experiment_number)
+	experiment_number = char(marine_ice.experiment_number(i));
+	filepath = strcat('~/experimental_data/', experiment_number, '/', experiment_number, '_smoothed.csv');
+	if isfile(filepath)
+		data = readtable(filepath);
+		if str2double(marine_ice.temperature{i}) == -7;
+			colour = c_marine_7;
+		elseif str2double(marine_ice.temperature{i}) == -2;
+			colour = c_marine_2;
+		else colour = [0.5 0.5 0.5];
+		end
+		if i==first_minus7 | i==first_minus2
+			handle_visibility = 'on';
+		else
+			handle_visibility = 'off';
+		end
+		plot(data.smoothed_octahedral_strain, data.smoothed_octahedral_strain_rate, 'LineWidth', main_line_width, 'color', colour, 'HandleVisibility', handle_visibility);
+		%plot tertiary strain rates as dotted lines
+		yline(marine_ice.tertiary_rate_1(i), '--', 'LineWidth', dotted_line_width, 'color', grey, 'HandleVisibility', 'off');
+		%plot secondary minimum
+		plot(marine_ice.secondary_strain(i), marine_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', grey, 'HandleVisibility', 'off');
+	end
+end
+axis(axis_limits)
+legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$')
+xlabel('octahedral shear strain')
+ylabel('octahedral shear strain rate')
+title('marine ice')
+%}}}
 
 
 %% }}}
