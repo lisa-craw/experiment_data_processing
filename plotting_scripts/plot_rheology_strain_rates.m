@@ -51,8 +51,8 @@ grey = [0.4 0.4 0.4];
 %% }}}
 
 %% plot all three datasets {{{
-circle_size = 10; 
-dot_size = 40; 
+circle_size = 12; 
+dot_size = 45; 
 
 f1 = figure('Position', [200 200 1700 550]);
 axis_limits = [-11 -1 0 1.5e-7];
@@ -80,13 +80,14 @@ for i = 1:length(standard_ice.experiment_number)
 	end
 %axis(axis_limits)
 legend('secondary', 'tertiary')
-xlabel('octahedral shear strain rate (s$^{-1}$)')
-ylabel('temperature ($^{\circ}\mathrm{C}$)')
-title('standard ice')
+ylabel('octahedral shear strain rate (s$^{-1}$)')
+xlabel('temperature ($^{\circ}\mathrm{C}$)')
+title('\textbf{standard ice}')
 axis(axis_limits)
+grid on
 
 %}}}
-% meteoric ice {{{
+% meteoric ice {{
 meteoric_ax = subplot(1,3,2);
 hold on
 		
@@ -103,10 +104,11 @@ for i = 1:length(meteoric_ice.experiment_number)
 	end
 %axis(axis_limits)
 legend('secondary', 'tertiary')
-xlabel('octahedral shear strain rate (s$^{-1}$)')
-ylabel('temperature ($^{\circ}\mathrm{C}$)')
-title('meteoric ice')
+ylabel('octahedral shear strain rate (s$^{-1}$)')
+xlabel('temperature ($^{\circ}\mathrm{C}$)')
+title('\textbf{meteoric ice}')
 axis(axis_limits)
+grid on
 
 %}}}
 % marine ice {{{
@@ -128,9 +130,12 @@ for i = 1:length(marine_ice.experiment_number)
 	end
 %axis(axis_limits)
 legend('secondary', 'tertiary')
-xlabel('octahedral shear strain rate (s$^{-1}$)')
-ylabel('temperature ($^{\circ}\mathrm{C}$)')
-title('marine ice')
+ylabel('octahedral shear strain rate (s$^{-1}$)')
+xlabel('temperature ($^{\circ}\mathrm{C}$)')
+title('\textbf{marine ice}')
 axis(axis_limits)
+grid on
 
 %}}}
+
+export_fig '~/experimental_data/figures/rheology_rates_vs_temp_all' -png

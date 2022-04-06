@@ -103,7 +103,8 @@ axis(axis_limits)
 legend('$-2\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', '$-10\,^{\circ}\mathrm{C}$')
 xlabel('octahedral shear strain')
 ylabel('octahedral shear strain rate')
-title('standard ice')
+title('\textbf{standard ice}')
+grid on
 
 %}}}
 % meteoric ice {{{
@@ -141,9 +142,9 @@ axis(axis_limits)
 legend('$-7\,^{\circ}\mathrm{C}$')
 xlabel('octahedral shear strain')
 ylabel('octahedral shear strain rate')
-title('meteoric ice')
+title('\textbf{meteoric ice}')
+grid on
 %}}}
-
 % marine ice {{{
 marine_ax = subplot(1,3,3);
 hold on
@@ -181,7 +182,8 @@ axis(axis_limits)
 legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$')
 xlabel('octahedral shear strain')
 ylabel('octahedral shear strain rate')
-title('marine ice')
+title('\textbf{marine ice}')
+grid on
 %}}}
 
 
