@@ -1,5 +1,5 @@
 *.m
-!/plotting_scripts.*.m
+!/plotting_scripts/*.m
 *.csv
 *.eps
 *.png
