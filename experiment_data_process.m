@@ -40,7 +40,7 @@ addpath '~/Documents/MATLAB/experiment_data_process/correction_scripts/'
 
 LC001_corrections('~/experimental_data/LC001/LC001_preprocessed.csv', '~/experimental_data/LC001/LC001_corrected.csv');
 LC002_corrections('~/experimental_data/LC002/LC002_preprocessed.csv', '~/experimental_data/LC002/LC002_corrected.csv');
-%LC003_corrections('~/experimental_data/LC003/LC003_preprocessed.csv', '~/experimental_data/LC003/LC003_corrected.csv');
+LC003_corrections('~/experimental_data/LC003/LC003_preprocessed.csv', '~/experimental_data/LC003/LC003_corrected.csv');
 LC004_corrections('~/experimental_data/LC004/LC004_preprocessed.csv', '~/experimental_data/LC004/LC004_corrected.csv');
 LC005_corrections('~/experimental_data/LC005/LC005_preprocessed.csv', '~/experimental_data/LC005/LC005_corrected.csv');
 LC006_corrections('~/experimental_data/LC006/LC006_preprocessed.csv', '~/experimental_data/LC006/LC006_corrected.csv');
