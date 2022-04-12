@@ -60,7 +60,7 @@ dotted_line_width = 2;
 dot_size = 10;
 
 f1 = figure('Position', [200 200 1700 550]);
-axis_limits = [0 0.2 6e-09 2.1e-7];
+axis_limits = [0 0.2 5.5e-09 2.2e-7];
 
 % standard ice {{{
 standard_ax = subplot(1,3,1);

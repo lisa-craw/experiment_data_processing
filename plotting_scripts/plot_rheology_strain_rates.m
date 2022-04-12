@@ -54,7 +54,7 @@ grey = [0.4 0.4 0.4];
 circle_size = 12; 
 dot_size = 45; 
 
-f1 = figure('Position', [200 200 1700 550]);
+f1 = figure('Position', [100 100 1800 450]);
 axis_limits = [-11 -1 0 1.5e-7];
 
 % standard ice {{{
@@ -79,7 +79,7 @@ for i = 1:length(standard_ice.experiment_number)
 		plot(standard_ice.temperature(i), standard_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
 	end
 %axis(axis_limits)
-legend('secondary', 'tertiary')
+legend('secondary', 'tertiary', 'Location', 'northwest')
 ylabel('octahedral shear strain rate (s$^{-1}$)')
 xlabel('temperature ($^{\circ}\mathrm{C}$)')
 title('\textbf{standard ice}')
@@ -87,7 +87,7 @@ axis(axis_limits)
 grid on
 
 %}}}
-% meteoric ice {{
+% meteoric ice {{{
 meteoric_ax = subplot(1,3,2);
 hold on
 		
@@ -103,7 +103,7 @@ for i = 1:length(meteoric_ice.experiment_number)
 		plot(meteoric_ice.temperature(i), meteoric_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
 	end
 %axis(axis_limits)
-legend('secondary', 'tertiary')
+legend('secondary', 'tertiary', 'Location', 'northwest')
 ylabel('octahedral shear strain rate (s$^{-1}$)')
 xlabel('temperature ($^{\circ}\mathrm{C}$)')
 title('\textbf{meteoric ice}')
@@ -129,7 +129,7 @@ for i = 1:length(marine_ice.experiment_number)
 		plot(marine_ice.temperature(i), marine_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
 	end
 %axis(axis_limits)
-legend('secondary', 'tertiary')
+legend('secondary', 'tertiary', 'Location', 'northwest')
 ylabel('octahedral shear strain rate (s$^{-1}$)')
 xlabel('temperature ($^{\circ}\mathrm{C}$)')
 title('\textbf{marine ice}')
