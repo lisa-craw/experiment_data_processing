@@ -108,6 +108,23 @@ if isfile('~/experimental_data/strain_rates.csv')==0
 end
 %}}}
 
+%% export grain data to .csv {{{
+for i = 1:length(experiment_numbers)
+   experiment_number = char(experiment_numbers(i));
+   undeformed_input = strcat(data_directory, experiment_number, '_undeformed/', experiment_number, '_undeformed_FA_smoothed.mat');
+   undeformed_output = strcat(data_directory, experiment_number, '_undeformed/', experiment_number, '_undeformed_FA_grain_data');
+   deformed_input = strcat(data_directory, experiment_number, '/', experiment_number, '_FA_smoothed.mat');
+   deformed_output = strcat(data_directory, experiment_number, '/', experiment_number, '_FA_grain_data');
+   if isfile (undeformed_input)
+      export_grain_data(undeformed_input, undeformed_output)
+   end
+   if isfile(deformed_input)
+      export_grain_data(deformed_input, deformed_output)
+   end
+end
+
+%}}}
+
 % add total accumulated strain and time to strain_rates.csv {{{
 strain_rates = readtable('~/experimental_data/strain_rates.csv');
 experiment_numbers = strain_rates.experiment_number;
@@ -133,3 +150,55 @@ end
 
 
 %}}}
+
+%% get grainsize and cpo orientation data for each fabric analyser map, and add to 
+%%note number of grains
+
+all_data = readtable('~/experimental_data/strain_rates.csv');
+experiment_numbers = all_data.experiment_number;
+already_exists = strcmp('deformed_median_grain_size', all_data.Properties.VariableNames);
+
+for i=1:length(experiment_numbers)
+experiment_number = char(experiment_numbers(i));
+% get median grain size and number of grains for undeformed sample
+	if isfile(strcat('~/experimental_data/microstructure_data/', experiment_number, '_undeformed/', experiment_number, '_undeformed_FA_grain_data.csv'));
+		data = readtable(strcat('~/experimental_data/microstructure_data/', experiment_number, '_undeformed/', experiment_number, '_undeformed_FA_grain_data.csv'));
+		all_data.undeformed_median_grain_size(i) = median(data.equivalent_diameter_microns);
+		all_data.undeformed_number_of_grains(i) = length(data.equivalent_diameter_microns);
+	else 
+		all_data.undeformed_median_grain_size(i) = NaN;
+		all_data.undeformed_number_of_grains(i) = NaN;
+	end	
+% do the same for deformed sample	
+	if isfile(strcat('~/experimental_data/microstructure_data/', experiment_number, '/', experiment_number, '_FA_grain_data.csv'));
+		data = readtable(strcat('~/experimental_data/microstructure_data/', experiment_number, '/', experiment_number, '_FA_grain_data.csv'));
+		all_data.deformed_median_grain_size(i) = median(data.equivalent_diameter_microns);
+		all_data.deformed_number_of_grains(i) = length(data.equivalent_diameter_microns);
+	else
+		all_data.deformed_median_grain_size(i) = NaN;
+      all_data.deformed_number_of_grains(i) = NaN;
+	end	
+% now do the same for j-index. This requires the script pfIntensity.m
+	if isfile(strcat('~/experimental_data/microstructure_data/', experiment_number, '_undeformed/', experiment_number, '_undeformed_FA_smoothed.mat'));
+		load(strcat('~/experimental_data/microstructure_data/', experiment_number, '_undeformed/', experiment_number, '_undeformed_FA_smoothed.mat'));
+		cs = ebsd('Ice 1h').CS;
+	   h = [Miller(0,0,0,1,cs)];
+		odf = calcODF(ebsd('Ice 1h').orientations,'halfwidth',7.5*degree);
+		[j_index, m, pfg_max] = pfIntensity(odf,h);
+		all_data.undeformed_jindex(i) = j_index;
+	else
+		all_data.undeformed_jindex(i) = NaN;
+	end	
+	if isfile(strcat('~/experimental_data/microstructure_data/', experiment_number, '/', experiment_number, '_FA_smoothed.mat'));
+		load(strcat('~/experimental_data/microstructure_data/', experiment_number, '/', experiment_number, '_FA_smoothed.mat'));
+		cs = ebsd('Ice 1h').CS;
+	   h = [Miller(0,0,0,1,cs)];
+		odf = calcODF(ebsd('Ice 1h').orientations,'halfwidth',7.5*degree);
+		[j_index, m, pfg_max] = pfIntensity(odf,h);
+		all_data.deformed_jindex(i) = j_index;
+	else
+		all_data.deformed_jindex(i) = NaN;
+	end	
+end
+
+writetable(all_data, '~/experimental_data/all_data.csv');
