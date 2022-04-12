@@ -1,7 +1,6 @@
-*.m
-!/plotting_scripts/*.m
 *.csv
 *.eps
 *.png
 *.mat
 ./figures/
+./temp_change/
