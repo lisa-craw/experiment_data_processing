@@ -8,7 +8,7 @@ else
 end
 
 %list of experiments we wish to calculate strain rates for (so we don't have to do them all every time)
-target_experiments = [1 2 4 5 8 9 10 11 12 13 16 17 18 19 20 22 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45]';
+target_experiments = [1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45]';
 
 for i=1:length(target_experiments)
 	experiment_number = target_experiments(i);
