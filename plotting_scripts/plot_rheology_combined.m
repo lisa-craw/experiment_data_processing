@@ -1,4 +1,4 @@
-% script to plot stress vs. strain and strain rate data from all rheology experiments (excludes temperature change and microstructure evolution experiments, i.e. only constant temp experiments which reached teriary strain)
+% script to plot strain rate vs. strain and secondary and tertiary strain rate data from all rheology experiments (excludes temperature change and microstructure evolution experiments, i.e. only constant temp experiments which reached teriary strain)
 
 %% select only experiments which reached tertiary and didn't have a temperature change. {{{
 strain_rates = readtable('~/experimental_data/strain_rates.csv');
@@ -7,10 +7,11 @@ changing_temp = contains(strain_rates.temperature, ',');
 rheology_list = strain_rates(~changing_temp, :);
 not_tertiary = isnan(rheology_list.tertiary_rate_1);
 rheology_list = rheology_list(~not_tertiary, :);
+% remove all minus 10 experiments, as these did not reach high strains and so are less comparable
+% (comment the following two lines to keep them in)
+minus10 = strcmp(rheology_list.temperature, '-10');
+rheology_list = rheology_list(~minus10,:);
 
-%LC034 appears to be affected by large grain size relative to sample size, giving it a stupidly high strain rate. Excluding this to make the rest of the data clearer (comment these lines to keep it in)
-%is28 = contains(rheology_list.experiment_number, '28');
-%rheology_list = rheology_list(~is28, :);
 %%}}}
 
 % separate out marine, meteoric and standard ice {{{ 
@@ -74,8 +75,8 @@ minus7_ind = find(standard_ice.temperature==-7);
 first_minus7 = minus7_ind(1);
 minus5_ind = find(standard_ice.temperature==-5);
 first_minus5 = minus5_ind(1);
-minus10_ind = find(standard_ice.temperature==-10);
-first_minus10 = minus10_ind(1);
+%minus10_ind = find(standard_ice.temperature==-10);
+%first_minus10 = minus10_ind(1);
 
 for i = 1:length(standard_ice.experiment_number)
 	experiment_number = char(standard_ice.experiment_number(i));
@@ -92,7 +93,7 @@ for i = 1:length(standard_ice.experiment_number)
 			colour = c_standard_10;
 		else colour = [0.5 0.5 0.5];
 		end
-		if i==first_minus7 | i==first_minus2 | i==first_minus5 | i==first_minus10
+		if i==first_minus7 | i==first_minus2 | i==first_minus5% | i==first_minus10
 			handle_visibility = 'on';
 		else
 			handle_visibility = 'off';
@@ -107,7 +108,7 @@ for i = 1:length(standard_ice.experiment_number)
 end
 legend('$-2\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', '$-10\,^{\circ}\mathrm{C}$')
 xlabel('octahedral shear strain')
-ylabel('octahedral shear strain rate')
+ylabel('octahedral shear strain rate (s$^{-1}$)')
 title('\textbf{standard ice}')
 grid on
 axis(ss_axis_limits)
@@ -148,15 +149,15 @@ for i = 1:length(marine_ice.experiment_number)
 end
 legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$')
 xlabel('octahedral shear strain')
-ylabel('octahedral shear strain rate')
+ylabel('octahedral shear strain rate (s$^{-1}$)')
 title('\textbf{marine ice}')
 grid on
 axis(ss_axis_limits)
 %}}}
 %% }}}
 
-% plot secondary and tertiary creep rates vs temperature
-rt_axis_limits = [-11 -1 0 1.5e-7];
+% plot secondary and tertiary creep rates vs temperature {{{
+rt_axis_limits = [-8 -1 0 1.5e-7];
 circle_size = 12;
 dot_size = 45;
 
@@ -178,8 +179,8 @@ for i = 1:length(standard_ice.experiment_number)
       end
       %plot secondary strain rate
       %plot tertiary strain rate
-      plot(standard_ice.temperature(i), standard_ice.secondary_rate(i), 'o', 'MarkerSize', circle_size, 'color', colour, 'HandleVisibility', 'on');
-      plot(standard_ice.temperature(i), standard_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
+      semilogy(standard_ice.temperature(i), standard_ice.secondary_rate(i), 'o', 'MarkerSize', circle_size, 'color', colour, 'HandleVisibility', 'on');
+      semilogy(standard_ice.temperature(i), standard_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
    end
 %axis(axis_limits)
 legend('secondary', 'tertiary', 'Location', 'northwest')
@@ -188,6 +189,15 @@ xlabel('temperature ($^{\circ}\mathrm{C}$)')
 %title('\textbf{standard ice}')
 axis(rt_axis_limits)
 grid on
+
+standard_sec_p = polyfit(standard_ice.temperature, standard_ice.secondary_rate, 1);
+standard_sec_fit = polyval(standard_sec_p, standard_ice.temperature);
+plot(standard_ice.temperature, standard_sec_fit, '--', 'LineWidth', dotted_line_width, 'color', c_standard_2)
+
+standard_tert_p = polyfit(standard_ice.temperature, standard_ice.tertiary_rate_1, 1);
+standard_tert_fit = polyval(standard_tert_p, standard_ice.temperature);
+plot(standard_ice.temperature, standard_tert_fit, '--', 'LineWidth', dotted_line_width, 'color', c_standard_2)
+
 %}}}
 
 % marine ice {{{
@@ -204,8 +214,8 @@ for i = 1:length(marine_ice.experiment_number)
       end
       %plot secondary strain rate
       %plot tertiary strain rate
-      plot(marine_ice.temperature(i), marine_ice.secondary_rate(i), 'o', 'MarkerSize', circle_size, 'color', colour, 'HandleVisibility', 'on');
-      plot(marine_ice.temperature(i), marine_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
+      semilogy(marine_ice.temperature(i), marine_ice.secondary_rate(i), 'o', 'MarkerSize', circle_size, 'color', colour, 'HandleVisibility', 'on');
+      semilogy(marine_ice.temperature(i), marine_ice.tertiary_rate_1(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'on');
    end
 %axis(axis_limits)
 legend('secondary', 'tertiary', 'Location', 'northwest')
@@ -214,7 +224,15 @@ xlabel('temperature ($^{\circ}\mathrm{C}$)')
 %title('\textbf{marine ice}')
 axis(rt_axis_limits)
 grid on
-%}}}
 
+marine_sec_p = polyfit(marine_ice.temperature, marine_ice.secondary_rate, 1);
+marine_sec_fit = polyval(marine_sec_p, marine_ice.temperature);
+plot(marine_ice.temperature, marine_sec_fit, '--', 'LineWidth', dotted_line_width, 'color', c_marine_2)
+
+marine_tert_p = polyfit(marine_ice.temperature, marine_ice.tertiary_rate_1, 1);
+marine_tert_fit = polyval(marine_tert_p, marine_ice.temperature);
+plot(marine_ice.temperature, marine_tert_fit, '--', 'LineWidth', dotted_line_width, 'color', c_marine_2)
+%}}}
+%}}}
 
 export_fig '~/experimental_data/figures/rheology_combined' -png
