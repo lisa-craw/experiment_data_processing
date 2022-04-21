@@ -12,6 +12,11 @@ I = [59570 60262];
 p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
 data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
 
+data.v_dis(245140:end) = data.v_dis(245140:end) + 0.02; 
+
+I = [244670 245140];
+p = polyfit(I,[data.v_dis(I(1)) data.v_dis(I(2))],1);
+data.v_dis(I(1):I(2)) = polyval(p,I(1):I(2)); 
 %data_corr = data; 
 writetable(struct2table(data), output_file); 
 
