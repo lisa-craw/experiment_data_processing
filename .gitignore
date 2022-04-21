@@ -3,4 +3,4 @@
 *.png
 *.mat
 ./figures/
-./temp_change/
+./temp_change/*
