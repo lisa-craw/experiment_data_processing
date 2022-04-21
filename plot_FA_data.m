@@ -43,7 +43,8 @@ end
 
 % plot pole figs {{{
 
-num_grains = 'all'; %set to the smallest number of grains in any section to have them all consistent, or 'all'
+deformed_num_grains = 500; %set to less than the smallest number of grains in any section to have them all consistent, or 'all'
+undeformed_num_grains = 'all'; %set to less than the smallest number of grains in any section to have them all consistent, or 'all'
 
 for i = 1:length(experiment_numbers)
 	experiment_number = char(experiment_numbers(i));
