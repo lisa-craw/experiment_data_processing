@@ -46,9 +46,9 @@ c_meteoric_7 = [0.2157 0.4431 0.5569];
 c_meteoric_2 = c_meteoric_7 + [shade shade shade];
 % alternative teal blue: [0 0.9412 0.7098];
 
-%green for marine ice
-c_marine_7 = [0.2 0.6 0.3333];
-%c_marine_7 = [0.2157 0.4431 0.5569];
+%blue for marine ice
+%c_marine_7 = [0.2 0.6 0.3333];
+c_marine_7 = [0.2157 0.4431 0.5569];
 c_marine_2 = c_marine_7 + [shade shade shade];
 
 % a cool orange if needed: [0.9804 0.5098 0.2980]
@@ -106,7 +106,7 @@ for i = 1:length(standard_ice.experiment_number)
 %		plot(standard_ice.secondary_strain(i), standard_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'off');
 	end
 end
-legend('$-2\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', '$-10\,^{\circ}\mathrm{C}$')
+legend('$-2\,^{\circ}\mathrm{C}$', '$-5\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', '$-10\,^{\circ}\mathrm{C}$', 'Location', 'southeast')
 xlabel('octahedral shear strain')
 ylabel('octahedral shear strain rate (s$^{-1}$)')
 title('\textbf{standard ice}')
@@ -147,7 +147,7 @@ for i = 1:length(marine_ice.experiment_number)
 %		plot(marine_ice.secondary_strain(i), marine_ice.secondary_rate(i), '.', 'MarkerSize', dot_size, 'color', colour, 'HandleVisibility', 'off');
 	end
 end
-legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$')
+legend('$-2\,^{\circ}\mathrm{C}$', '$-7\,^{\circ}\mathrm{C}$', 'Location', 'southeast')
 xlabel('octahedral shear strain')
 ylabel('octahedral shear strain rate (s$^{-1}$)')
 title('\textbf{marine ice}')
@@ -190,13 +190,15 @@ xlabel('temperature ($^{\circ}\mathrm{C}$)')
 axis(rt_axis_limits)
 grid on
 
+
+% add trendlines
 standard_sec_p = polyfit(standard_ice.temperature, standard_ice.secondary_rate, 1);
 standard_sec_fit = polyval(standard_sec_p, standard_ice.temperature);
-plot(standard_ice.temperature, standard_sec_fit, '--', 'LineWidth', dotted_line_width, 'color', c_standard_2)
+plot(standard_ice.temperature, standard_sec_fit, '--', 'LineWidth', dotted_line_width, 'color', c_standard_2, 'HandleVisibility', 'off')
 
 standard_tert_p = polyfit(standard_ice.temperature, standard_ice.tertiary_rate_1, 1);
 standard_tert_fit = polyval(standard_tert_p, standard_ice.temperature);
-plot(standard_ice.temperature, standard_tert_fit, '--', 'LineWidth', dotted_line_width, 'color', c_standard_2)
+plot(standard_ice.temperature, standard_tert_fit, '--', 'LineWidth', dotted_line_width, 'color', c_standard_2, 'HandleVisibility', 'off')
 
 %}}}
 
@@ -225,13 +227,14 @@ xlabel('temperature ($^{\circ}\mathrm{C}$)')
 axis(rt_axis_limits)
 grid on
 
+% add trendlines
 marine_sec_p = polyfit(marine_ice.temperature, marine_ice.secondary_rate, 1);
 marine_sec_fit = polyval(marine_sec_p, marine_ice.temperature);
-plot(marine_ice.temperature, marine_sec_fit, '--', 'LineWidth', dotted_line_width, 'color', c_marine_2)
+plot(marine_ice.temperature, marine_sec_fit, '--', 'LineWidth', dotted_line_width, 'color', c_marine_2, 'HandleVisibility', 'off')
 
 marine_tert_p = polyfit(marine_ice.temperature, marine_ice.tertiary_rate_1, 1);
 marine_tert_fit = polyval(marine_tert_p, marine_ice.temperature);
-plot(marine_ice.temperature, marine_tert_fit, '--', 'LineWidth', dotted_line_width, 'color', c_marine_2)
+plot(marine_ice.temperature, marine_tert_fit, '--', 'LineWidth', dotted_line_width, 'color', c_marine_2, 'HandleVisibility', 'off')
 %}}}
 %}}}
 
