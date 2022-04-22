@@ -4,8 +4,12 @@
 function plot_spatial_map(input_path, output_path)
 	load(input_path)
 	fig1 = newMtexFigure;	
-%	plot(ebsd('ice'),color, 'micronbar', 'off');
-	plot(ebsd('Ice 1h'),trendColor,'micronbar','on')
+	if contains(input_path, 'ebsd')
+		color = oM.orientation2color(ebsd('ice').orientations);
+		plot(ebsd('ice'),color, 'micronbar', 'on');
+	else
+		plot(ebsd('Ice 1h'),trendColor,'micronbar','on')
+	end
 
 	hold on
 	bnd = grains.boundary('ice','ice');
@@ -21,9 +25,12 @@ function plot_spatial_map(input_path, output_path)
 	close all
 	
 	fig2 = newMtexFigure;	
-%	plot(ebsd('ice'),color, 'micronbar', 'off');
-	plot(ebsd('Ice 1h'),trendColor,'micronbar','off')
-
+	if contains(input_path, 'ebsd')
+		color = oM.orientation2color(ebsd('ice').orientations);
+		plot(ebsd('ice'),color, 'micronbar', 'off');
+	else
+		plot(ebsd('Ice 1h'),trendColor,'micronbar','off')
+	end
 	hold on
 	bnd = grains.boundary('ice','ice');
 	plot(grains.boundary,'linewidth',1, 'LineColor', 'k')
