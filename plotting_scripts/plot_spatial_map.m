@@ -5,6 +5,8 @@ function plot_spatial_map(input_path, output_path)
 	load(input_path)
 	fig1 = newMtexFigure;	
 	if contains(input_path, 'ebsd')
+		oM = ipdfHSVOrientationMapping(ebsd('ice'));
+		oM.inversePoleFigureDirection = xvector;
 		color = oM.orientation2color(ebsd('ice').orientations);
 		plot(ebsd('ice'),color, 'micronbar', 'on');
 	else
