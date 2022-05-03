@@ -19,7 +19,8 @@ circle_size = 10;
 dotted_line_width = 1;
 left_axis_limits = [0 0.15 700 1500];
 right_axis_limits = [0 0.15 0 7];
-afs = 14;
+afs = 18; %axis label font size
+tfs = 20; %title font size
 
 left_colour = c_standard-shade;
 right_colour = c_standard+shade;
@@ -70,7 +71,7 @@ plot([all_data.max_octahedral_strain(trendline_ind(1)) all_data.max_octahedral_s
 
 
 %legend(leg, 'Location', 'southeast')
-title('\textbf{standard ice}')
+title('\textbf{standard ice}', 'FontSize', tfs)
 grid on
 
 % plot marine ice data 
@@ -119,7 +120,8 @@ marine_jindex_p = polyfit(all_data.max_octahedral_strain(trendline_ind), all_dat
 marine_jindex_fit = polyval(marine_jindex_p, all_data.max_octahedral_strain(trendline_ind));
 plot([all_data.max_octahedral_strain(trendline_ind(1)) all_data.max_octahedral_strain(trendline_ind(end))], [marine_jindex_fit(1) marine_jindex_fit(end)], '--', 'Linewidth', dotted_line_width, 'color', right_colour, 'HandleVisibility', 'off');
 
-
-title('\textbf{marine ice}')
+title('\textbf{marine ice}', 'FontSize', tfs)
 grid on
 
+%saveas(gcf, '~/experimental_data/figures/incremental_gs_jindex.png');
+export_fig '~/experimental_data/figures/incremental_gs_jindex' -png
