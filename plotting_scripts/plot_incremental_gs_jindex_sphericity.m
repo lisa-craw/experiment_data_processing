@@ -13,32 +13,33 @@ c_marine = [0.2157 0.4431 0.5569];
 shade = [0.15 0.15 0.15];
 %}}}
 
-f1 = figure('Position', [200 200 1700 400]);
+f1 = figure('Position', [200 200 1300 500]);
 marker_size = 30;
 dotted_line_width = 1;
-left_axis_limits = [0 0.15 700 1500];
-right_axis_limits = [0 0.15 0 7];
 afs = 18; %axis label font size
 tfs = 20; %title font size
 
 % set axes {{{
-gs_ax = subplot(1,3,1)
+gs_ax = subplot(1,2,1)
 xlabel('maximum octahedral shear strain', 'FontSize', afs)
 ylabel('median grain size, $\mu$m', 'FontSize', afs)
 title('grain size')
 hold on
 
-jindex_ax = subplot(1,3,2)
+jindex_ax = subplot(1,2,2)
 xlabel('maximum octahedral shear strain', 'FontSize', afs)
 ylabel('J-index', 'FontSize', afs)
 title('CPO intensity')
 hold on
 
-sphericity_ax = subplot(1,3,3)
-xlabel('maximum octahedral shear strain', 'FontSize', afs)
-ylabel('mean sphericity, $\psi$', 'FontSize', afs)
-title('grain sphericity')
-hold on
+%sphericity_ax = subplot(1,3,3)
+%xlabel('maximum octahedral shear strain', 'FontSize', afs)
+%ylabel('mean sphericity, $\psi$', 'FontSize', afs)
+%title('grain sphericity')
+%hold on
+
+gs_ax.Position = gs_ax.Position + [0 0.06 0 -0.08];
+
 %}}}
 
 % create vectors to store sphericity data
@@ -61,11 +62,11 @@ for i= 1:length(standard_incremental)
 	axes(jindex_ax)
 	plot(all_data.max_octahedral_strain(number), all_data.deformed_jindex(number), '.', 'MarkerSize', marker_size, 'color', c_standard, 'HandleVisibility', handle);
 	%sphericity data
-	grain_data = readtable(strcat('~/experimental_data/FA_data/', experiment_number, '/', experiment_number, '_FA_grain_data.csv'));
-	mean_sphericity = mean(grain_data.sphericity);
-	standard_sphericity(i) = mean_sphericity;
-	axes(sphericity_ax)
-	plot(all_data.max_octahedral_strain(number), mean_sphericity, '.', 'MarkerSize', marker_size, 'color', c_standard, 'HandleVisibility', handle);
+%	grain_data = readtable(strcat('~/experimental_data/FA_data/', experiment_number, '/', experiment_number, '_FA_grain_data.csv'));
+%	mean_sphericity = mean(grain_data.sphericity);
+%	standard_sphericity(i) = mean_sphericity;
+%	axes(sphericity_ax)
+%	plot(all_data.max_octahedral_strain(number), mean_sphericity, '.', 'MarkerSize', marker_size, 'color', c_standard, 'HandleVisibility', handle);
 end
 
 % plot marine ice data 
@@ -84,11 +85,11 @@ for i= 1:length(marine_incremental)
 	axes(jindex_ax)
 	plot(all_data.max_octahedral_strain(number), all_data.deformed_jindex(number), '.', 'MarkerSize', marker_size, 'color', c_marine, 'HandleVisibility', handle);
 	%sphericity data
-	grain_data = readtable(strcat('~/experimental_data/FA_data/', experiment_number, '/', experiment_number, '_FA_grain_data.csv'));
-	mean_sphericity = mean(grain_data.sphericity);
-	marine_sphericity(i) = mean_sphericity;
-	axes(sphericity_ax)
-	plot(all_data.max_octahedral_strain(number), mean_sphericity, '.', 'MarkerSize', marker_size, 'color', c_marine, 'HandleVisibility', handle);
+%	grain_data = readtable(strcat('~/experimental_data/FA_data/', experiment_number, '/', experiment_number, '_FA_grain_data.csv'));
+%	mean_sphericity = mean(grain_data.sphericity);
+%	marine_sphericity(i) = mean_sphericity;
+%	axes(sphericity_ax)
+%	plot(all_data.max_octahedral_strain(number), mean_sphericity, '.', 'MarkerSize', marker_size, 'color', c_marine, 'HandleVisibility', handle);
 end
 
 %axis(axis_limits);
@@ -133,8 +134,8 @@ plot([all_data.max_octahedral_strain(trendline_ind(1)) all_data.max_octahedral_s
 %marine_jindex_fit = polyval(marine_sphericity_p, all_data.max_octahedral_strain(trendline_ind));
 %plot([all_data.max_octahedral_strain(trendline_ind(1)) all_data.max_octahedral_strain(trendline_ind(end))], [marine_jindex_fit(1) marine_jindex_fit(end)], '--', 'Linewidth', dotted_line_width, 'color', c_marine, 'HandleVisibility', 'off');
 
-axes(gs_ax)
-legend('standard ice', 'marine ice', 'Location', 'northeast')
+axes(jindex_ax)
+legend('standard ice', 'marine ice', 'Location', 'southeast')
 
 %saveas(gcf, '~/experimental_data/figures/incremental_gs_jindex.png');
 export_fig '~/experimental_data/figures/incremental_gs_jindex_sphericity' -png
