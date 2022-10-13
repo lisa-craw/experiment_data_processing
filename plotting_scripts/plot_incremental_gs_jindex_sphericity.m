@@ -13,7 +13,7 @@ c_marine = [0.2157 0.4431 0.5569];
 shade = [0.15 0.15 0.15];
 %}}}
 
-f1 = figure('Position', [200 200 1300 500]);
+f1 = figure('Position', [200 200 800 300]);
 marker_size = 30;
 dotted_line_width = 1;
 afs = 18; %axis label font size
@@ -38,7 +38,7 @@ hold on
 %title('grain sphericity')
 %hold on
 
-gs_ax.Position = gs_ax.Position + [0 0.06 0 -0.08];
+gs_ax.Position = gs_ax.Position + [0 0.08 0 -0.1];
 
 %}}}
 
