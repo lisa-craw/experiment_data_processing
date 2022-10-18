@@ -1,4 +1,5 @@
 % function to plot pole figures of microstructure dataset
+% requires the function export_fig from the MATLAB File Exchange: https://au.mathworks.com/matlabcentral/fileexchange/23629-export_fig
 
 function plot_pole_figs(input_path, output_path, num_points)
 		load(input_path)
