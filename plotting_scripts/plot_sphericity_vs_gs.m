@@ -32,7 +32,10 @@ function plot_sphericity_distribution(input_path, output_path, ice_type)
 	%plot(grain_data.equivalent_diameter_microns, fit, 'LineWidth', 2, '--', 'color', colour)
 	[minimum, minimum_ind] = min(grain_data.equivalent_diameter_microns);
 	[maximum, maximum_ind] = max(grain_data.equivalent_diameter_microns);
-	plot([minimum maximum], [fit(minimum_ind) fit(maximum_ind)],'--', 'LineWidth', 2, 'color', trendline_colour) 
+	plot([minimum maximum], [fit(minimum_ind) fit(maximum_ind)],'--', 'LineWidth', 3, 'color', trendline_colour) 
+	gradient = (fit(maximum_ind)-fit(minimum_ind))/(maximum-minimum);
+	gradient = round(gradient, 2, 'significant');
+	text(2500, 0.4, strcat("\textbf{gradient = ", string(gradient), "}"), 'FontSize', 16, 'color', trendline_colour);
 	axis([0 6000 0 0.5]);
 	xlabel('grain sphericity, $\psi$','Interpreter', 'latex', 'fontsize',afs)
 	ylabel('grain size, $\mu$m','Interpreter', 'latex', 'fontsize',afs)
