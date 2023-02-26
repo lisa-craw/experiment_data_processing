@@ -2,6 +2,7 @@ This repository contains MATLAB scripts written for processing data from ice mec
 
 Also contained in the directory /plotting_scripts/ are scripts to process and plot microstructural information from electron backscatter diffraction (EBSD) and fabric analyer (FA) analysis. 
 
+All of these scripts were written and run using MATLAB 2018b.
 ---
 
 ###Data
